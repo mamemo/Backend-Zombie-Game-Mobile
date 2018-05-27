@@ -1,6 +1,6 @@
 {
-  "name": "node-postgres-promises",
-  "version": "0.0.0",
+  "name": "backend-zombies",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
