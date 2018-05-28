@@ -4,6 +4,7 @@ const router = express.Router();
 const users = require('../controllers/userController');
 const type_users = require('../controllers/typeUsersController');
 const type_goals = require('../controllers/typeGoalsController');
+const achievements = require('../controllers/achievementController');
 
 router.get('/users/', users.getAllUsers);
 router.get('/users/:id', users.getSingleUser);
@@ -22,6 +23,12 @@ router.get('/type_goals/:id', type_goals.getSingleType);
 router.post('/type_goals', type_goals.createType);
 router.put('/type_goals/:id', type_goals.updateType);
 router.delete('/type_goals/:id', type_goals.removeType);
+
+router.get('/achievements/', achievements.getAllAchievements);
+router.get('/achievements/:id', achievements.getSingleAchievement);
+router.post('/achievements', achievements.createAchievement);
+router.put('/achievements/:id', achievements.updateAchievement);
+router.delete('/achievements/:id', achievements.removeAchievement);
 
 
 module.exports = router;
