@@ -51,7 +51,8 @@ CREATE TABLE goals (
   latitud REAL,
   longitud REAL,
   points REAL,
-  type_id INTEGER REFERENCES type_goals(id)
+  type_id INTEGER REFERENCES type_goals(id),
+  challenge_id INTEGER REFERENCES challenges(id)
 );
 
 CREATE TABLE achievements (
