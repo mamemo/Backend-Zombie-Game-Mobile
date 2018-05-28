@@ -3,6 +3,7 @@ const router = express.Router();
 
 const users = require('../controllers/userController');
 const type_users = require('../controllers/typeUsersController');
+const type_goals = require('../controllers/typeGoalsController');
 
 router.get('/users/', users.getAllUsers);
 router.get('/users/:id', users.getSingleUser);
@@ -15,6 +16,12 @@ router.get('/type_users/:id', type_users.getSingleType);
 router.post('/type_users', type_users.createType);
 router.put('/type_users/:id', type_users.updateType);
 router.delete('/type_users/:id', type_users.removeType);
+
+router.get('/type_goals/', type_goals.getAllTypes);
+router.get('/type_goals/:id', type_goals.getSingleType);
+router.post('/type_goals', type_goals.createType);
+router.put('/type_goals/:id', type_goals.updateType);
+router.delete('/type_goals/:id', type_goals.removeType);
 
 
 module.exports = router;

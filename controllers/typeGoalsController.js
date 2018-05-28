@@ -10,7 +10,7 @@ module.exports = {
 };
 
 function getAllTypes(req, res, next) {
-  db.any('select * from type_users')
+  db.any('select * from type_goals')
     .then(function (data) {
       res.status(200)
         .json({
@@ -29,7 +29,7 @@ function getAllTypes(req, res, next) {
 
 function getSingleType(req, res, next) {
   const TypeID = parseInt(req.params.id);
-  db.one('select * from type_users where id = $1', TypeID)
+  db.one('select * from type_goals where id = $1', TypeID)
     .then(function (data) {
       res.status(200)
         .json({
@@ -47,8 +47,8 @@ function getSingleType(req, res, next) {
 }
 
 function createType(req, res, next) {
-  db.none('insert into type_users(name)' +
-      'values(${name})',
+  db.none('insert into type_goals(name, stamina, bullets)' +
+      'values(${name},${stamina},${bullets})',
     req.body)
     .then(function () {
       res.status(200)
@@ -67,8 +67,8 @@ function createType(req, res, next) {
 }
 
 function updateType(req, res, next) {
-  db.none('update type_users set name=$1 where id=$2',
-    [req.body.name, parseInt(req.params.id)])
+  db.none('update type_goals set name=$1, stamina=$2, bullets=$3 where id=$4',
+    [req.body.name, req.body.stamina, req.body.bullets, parseInt(req.params.id)])
     .then(function () {
       res.status(200)
         .json({
@@ -87,7 +87,7 @@ function updateType(req, res, next) {
 
 function removeType(req, res, next) {
   const TypeID = parseInt(req.params.id);
-  db.result('delete from type_users where id = $1', TypeID)
+  db.result('delete from type_goals where id = $1', TypeID)
     .then(function (result) {
       /* jshint ignore:start */
       res.status(200)
