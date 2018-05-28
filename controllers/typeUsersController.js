@@ -2,15 +2,15 @@ const db = require('../db');
 
 // add query functions
 module.exports = {
-  getAllUsers: getAllUsers,
-  getSingleUser: getSingleUser,
-  createUser: createUser,
-  updateUser: updateUser,
-  removeUser: removeUser
+  getAllTypes: getAllTypes,
+  getSingleType: getSingleType,
+  createType: createType,
+  updateType: updateType,
+  removeType: removeType
 };
 
-function getAllUsers(req, res, next) {
-  db.any('select * from users')
+function getAllTypes(req, res, next) {
+  db.any('select * from type_users')
     .then(function (data) {
       res.status(200)
         .json({
@@ -27,9 +27,9 @@ function getAllUsers(req, res, next) {
     });
 }
 
-function getSingleUser(req, res, next) {
-  const userID = parseInt(req.params.id);
-  db.one('select * from users where id = $1', userID)
+function getSingleType(req, res, next) {
+  const TypeID = parseInt(req.params.id);
+  db.one('select * from type_users where id = $1', TypeID)
     .then(function (data) {
       res.status(200)
         .json({
@@ -46,16 +46,15 @@ function getSingleUser(req, res, next) {
     });
 }
 
-function createUser(req, res, next) {
-  req.body.type_id = parseInt(req.body.type_id);
-  db.none('insert into users(name, mail, password, challenges_completed, points, zombies_killed, run_aways, type_id)' +
-      'values(${name}, ${mail}, ${password}, 0, 0, 0, 0, ${type_id})',
+function createType(req, res, next) {
+  db.none('insert into users(name)' +
+      'values(${name})',
     req.body)
     .then(function () {
       res.status(200)
         .json({
           status: 'success',
-          message: 'Inserted one user'
+          message: 'Inserted one Type'
         });
     })
     .catch(function (err) {
@@ -67,15 +66,14 @@ function createUser(req, res, next) {
     });
 }
 
-function updateUser(req, res, next) {
-  db.none('update users set name=$1, mail=$2, password=$3, challenges_completed=$4, points=$5, zombies_killed=$6, run_aways=$7, type_id=$8 where id=$9',
-    [req.body.name, req.body.mail, req.body.password, parseInt(req.body.challenges_completed), parseInt(req.body.points), parseInt(req.body.zombies_killed),
-      parseInt(req.body.run_aways), parseInt(req.body.type_id), parseInt(req.params.id)])
+function updateType(req, res, next) {
+  db.none('update type_users set name=$1 where id=$2',
+    [req.body.name, parseInt(req.params.id)])
     .then(function () {
       res.status(200)
         .json({
           status: 'success',
-          message: 'Updated user'
+          message: 'Updated Type'
         });
     })
     .catch(function (err) {
@@ -87,15 +85,15 @@ function updateUser(req, res, next) {
     });
 }
 
-function removeUser(req, res, next) {
-  const userID = parseInt(req.params.id);
-  db.result('delete from users where id = $1', userID)
+function removeType(req, res, next) {
+  const TypeID = parseInt(req.params.id);
+  db.result('delete from type_users where id = $1', TypeID)
     .then(function (result) {
       /* jshint ignore:start */
       res.status(200)
         .json({
           status: 'success',
-          message: `Removed ${result.rowCount} users`
+          message: `Removed ${result.rowCount} Types`
         });
       /* jshint ignore:end */
     })
