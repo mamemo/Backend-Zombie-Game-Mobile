@@ -24,7 +24,7 @@ function validate(req, res) {
 }
 
 function getAllUsers(req, res, next) {
-  if (validate(req, res)) {
+  //if (validate(req, res)) {
     db.any('select * from users')
       .then(function(data) {
         res.status(200)
@@ -40,7 +40,7 @@ function getAllUsers(req, res, next) {
             err: err
           });
       });
-  }
+  //}
 }
 
 function getSingleUser(req, res, next) {
