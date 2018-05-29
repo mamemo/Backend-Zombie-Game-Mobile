@@ -11,10 +11,10 @@ const configurations = require('../controllers/configurationController');
 const challengeGoalUser = require('../controllers/challengesGoalsUserController');
 
 router.get('/users/', users.getAllUsers);
-router.get('/users/:id', users.getSingleUser);
+router.get('/users/:mail', users.getSingleUser);
 router.post('/users', users.createUser);
-router.put('/users/:id', users.updateUser);
-router.delete('/users/:id', users.removeUser);
+router.put('/users/:mail', users.updateUser);
+router.delete('/users/:mail', users.removeUser);
 
 router.get('/type_users/', type_users.getAllTypes);
 router.get('/type_users/:id', type_users.getSingleType);

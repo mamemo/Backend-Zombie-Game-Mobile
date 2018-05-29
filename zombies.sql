@@ -11,10 +11,9 @@ INSERT INTO type_users (name) VALUES('Administrator');
 INSERT INTO type_users (name) VALUES('Player');
 
 CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR,
-  mail VARCHAR,
+  mail VARCHAR PRIMARY KEY,
   password VARCHAR,
+  name VARCHAR,
   challenges_completed INTEGER,
   points INTEGER,
   zombies_killed INTEGER,
@@ -70,12 +69,12 @@ CREATE TABLE configuration (
   id SERIAL PRIMARY KEY,
   volume BOOLEAN,
   vibration BOOLEAN,
-  user_id INTEGER REFERENCES users(id)
+  user_mail VARCHAR REFERENCES users(mail)
 );
 
 CREATE TABLE challenges_and_goals_x_user (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
+  user_mail VARCHAR REFERENCES users(mail),
   challenge_id INTEGER REFERENCES challenges(id),
   goal_id INTEGER REFERENCES goals(id)
 );

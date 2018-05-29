@@ -1,32 +1,48 @@
-// const mongoose = require('mongoose')
-// const jwt = require('jsonwebtoken');
-// const bcrypt = require('bcryptjs');
-// const config = require('../config')
-// const usuarioModel = require('../models/usuarioModel')
-//
-//
-//
-// function ingresar(req, res) {
-//   var usuario = req.body
-//   usuarioModel.findById(usuario.usuario).then((user)=>{
-//       if(!user){res.status(500);res.send({error:true, type:0})}
-//       else if(bcrypt.compareSync(usuario.contraseña,user.contraseña)){
-//         res.status(200);res.send({error:false,usuario:{usuario:usuario.usuario,tipo:user.tipo,token:jwt.sign({ id: usuario.usuario }, config.pass, {expiresIn: 86400})}});
-//       }
-//       else{res.status(500);res.send({error:true, type:1})}
-//     }).catch(error => {
-//       console.log(error)
-//     })
-//
-// }
-//
-// function autentificarAccion(JWT) {
-//   return jwt.verify(JWT, config.pass);
-// }
-//
-// module.exports = {
-//   ingresar, autentificarAccion
-// }
-//
-//
-//
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const config = require('../config');
+const db = require('../db');
+
+function ingresar(req, res, next) {
+  const userMail = req.body.mail;
+  const userPass = req.body.password;
+  db.one('select * from users where mail = $1', userMail)
+    .then(function(data) {
+      if (bcrypt.compareSync(userPass, data.password)) {
+        res.status(200)
+          .json({
+            status: 'success',
+            data: data,
+            token: jwt.sign({
+              id: data
+            }, config.pass, {
+              expiresIn: "2 days"
+            })
+          });
+      } else {
+        res.status(500)
+          .json({
+            status: 'error',
+            type: 1 //No coincidian las claves
+          });
+      }
+    })
+    .catch(function(err) {
+      res.status(500)
+        .json({
+          status: 'error',
+          type: 0 //No se encuentra en la base de datos
+        });
+    });
+}
+
+function autentificarAccion(JWT) {
+  return jwt.verify(JWT, config.pass, function(err, decoded) {
+    return typeof decoded != "undefined";
+  });
+}
+
+module.exports = {
+  ingresar,
+  autentificarAccion
+}
