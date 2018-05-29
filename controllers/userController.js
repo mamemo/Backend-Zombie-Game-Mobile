@@ -65,7 +65,7 @@ function getSingleUser(req, res, next) {
 }
 
 function createUser(req, res, next) {
-  if (validate(req, res)) {
+  //if (validate(req, res)) {
     req.body.type_id = parseInt(req.body.type_id);
     req.body.password = bcrypt.hashSync(req.body.password, 8);
     db.none('insert into users(name, mail, password, challenges_completed, points, zombies_killed, run_aways, type_id)' +
@@ -85,7 +85,7 @@ function createUser(req, res, next) {
             err: err
           });
       });
-  }
+  //}
 }
 
 function updateUser(req, res, next) {
