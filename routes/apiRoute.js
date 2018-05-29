@@ -8,6 +8,7 @@ const achievements = require('../controllers/achievementController');
 const challenges = require('../controllers/challengeController');
 const goals = require('../controllers/goalController');
 const configurations = require('../controllers/configurationController');
+const challengeGoalUser = require('../controllers/challengesGoalsUserController');
 
 router.get('/users/', users.getAllUsers);
 router.get('/users/:id', users.getSingleUser);
@@ -50,5 +51,11 @@ router.get('/configurations/:id', configurations.getSingleConfiguration);
 router.post('/configurations', configurations.createConfiguration);
 router.put('/configurations/:id', configurations.updateConfiguration);
 router.delete('/configurations/:id', configurations.removeConfiguration);
+
+router.get('/challengesGoalsUsers/', challengeGoalUser.getAllChallengesGoalsUser);
+router.get('/challengesGoalsUsers/:id', challengeGoalUser.getSingleChallengesGoalsUser);
+router.post('/challengesGoalsUsers', challengeGoalUser.createChallengesGoalsUser);
+router.put('/challengesGoalsUsers/:id', challengeGoalUser.updateChallengesGoalsUser);
+router.delete('/challengesGoalsUsers/:id', challengeGoalUser.removeChallengesGoalsUser);
 
 module.exports = router;
