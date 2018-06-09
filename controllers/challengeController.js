@@ -9,6 +9,7 @@ module.exports = {
   removeChallenge: removeChallenge
 };
 
+//Function to validate a request
 function validate(req, res) {
   if (!req.headers.hasOwnProperty('authorization') || req.headers.authorization == "" || !auth.autentificarAccion(req.headers.authorization)) {
     res.status(500)
@@ -21,7 +22,7 @@ function validate(req, res) {
   return true
 }
 
-
+//Function to get all rows in table
 function getAllChallenges(req, res, next) {
   if (validate(req, res)) {
     db.any('select * from challenges')
@@ -42,6 +43,7 @@ function getAllChallenges(req, res, next) {
   }
 }
 
+//Function to get single row in table
 function getSingleChallenge(req, res, next) {
   if (validate(req, res)) {
     const challengeID = parseInt(req.params.id);
@@ -63,6 +65,7 @@ function getSingleChallenge(req, res, next) {
   }
 }
 
+//Function to insert a new row
 function createChallenge(req, res, next) {
   if (validate(req, res)) {
     req.body.latitud_inicial = parseFloat(req.body.latitud_inicial);
@@ -92,6 +95,7 @@ function createChallenge(req, res, next) {
   }
 }
 
+//Function to update a row in table
 function updateChallenge(req, res, next) {
   if (validate(req, res)) {
     db.none('update challenges set name=$1, description=$2, latitud_inicial=$3, longitud_inicial=$4,' +
@@ -116,6 +120,7 @@ function updateChallenge(req, res, next) {
   }
 }
 
+//Function to remove a row in table
 function removeChallenge(req, res, next) {
   if (validate(req, res)) {
     const challengeID = parseInt(req.params.id);

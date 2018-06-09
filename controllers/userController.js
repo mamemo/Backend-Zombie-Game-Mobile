@@ -11,6 +11,7 @@ module.exports = {
   removeUser: removeUser
 };
 
+//Function to validate a request
 function validate(req, res) {
   if (!req.headers.hasOwnProperty('authorization') || req.headers.authorization == "" || !auth.autentificarAccion(req.headers.authorization)) {
     res.status(500)
@@ -23,6 +24,7 @@ function validate(req, res) {
   return true
 }
 
+//Function to get all rows in table
 function getAllUsers(req, res, next) {
   //if (validate(req, res)) {
     db.any('select * from users')
@@ -43,6 +45,7 @@ function getAllUsers(req, res, next) {
   //}
 }
 
+//Function to get single row in table
 function getSingleUser(req, res, next) {
   if (validate(req, res)) {
     const userMail = req.params.mail;
@@ -64,6 +67,7 @@ function getSingleUser(req, res, next) {
   }
 }
 
+//Function to insert a new row
 function createUser(req, res, next) {
   //if (validate(req, res)) {
     req.body.type_id = parseInt(req.body.type_id);
@@ -88,6 +92,7 @@ function createUser(req, res, next) {
   //}
 }
 
+//Function to update a row in table
 function updateUser(req, res, next) {
   if (validate(req, res)) {
     db.none('update users set name=$1, password=$3, challenges_completed=$4, points=$5, zombies_killed=$6, run_aways=$7, type_id=$8 where mail=$2', [req.body.name, req.params.mail, bcrypt.hashSync(req.body.password), parseInt(req.body.challenges_completed), parseInt(req.body.points), parseInt(req.body.zombies_killed),
@@ -110,6 +115,7 @@ function updateUser(req, res, next) {
   }
 }
 
+//Function to remove a row in table
 function removeUser(req, res, next) {
   if (validate(req, res)) {
     const userMail = req.params.mail;

@@ -9,6 +9,7 @@ module.exports = {
   removeAchievement: removeAchievement
 };
 
+//Function to validate a request
 function validate(req, res) {
   if (!req.headers.hasOwnProperty('authorization') || req.headers.authorization == "" || !auth.autentificarAccion(req.headers.authorization)) {
     res.status(500)
@@ -21,7 +22,7 @@ function validate(req, res) {
   return true
 }
 
-
+//Function to get all rows in table
 function getAllAchievements(req, res, next) {
   if (validate(req, res)) {
     db.any('select * from achievements')
@@ -42,6 +43,7 @@ function getAllAchievements(req, res, next) {
   }
 }
 
+//Function to get single row in table
 function getSingleAchievement(req, res, next) {
   if (validate(req, res)) {
     const achievementID = parseInt(req.params.id);
@@ -63,6 +65,7 @@ function getSingleAchievement(req, res, next) {
   }
 }
 
+//Function to insert a new row
 function createAchievement(req, res, next) {
   if (validate(req, res)) {
     db.none('insert into achievements(name, description)' +
@@ -85,6 +88,7 @@ function createAchievement(req, res, next) {
   }
 }
 
+//Function to update a row in table
 function updateAchievement(req, res, next) {
   if (validate(req, res)) {
     db.none('update achievements set name=$1, description=$2 where id=$3', [req.body.name, req.body.description, parseInt(req.params.id)])
@@ -105,6 +109,7 @@ function updateAchievement(req, res, next) {
   }
 }
 
+//Function to remove a row in table
 function removeAchievement(req, res, next) {
   if (validate(req, res)) {
     const AchievementID = parseInt(req.params.id);

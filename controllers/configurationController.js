@@ -9,6 +9,7 @@ module.exports = {
   removeConfiguration: removeConfiguration
 };
 
+//Function to validate a request
 function validate(req, res) {
   if (!req.headers.hasOwnProperty('authorization') || req.headers.authorization == "" || !auth.autentificarAccion(req.headers.authorization)) {
     res.status(500)
@@ -21,7 +22,7 @@ function validate(req, res) {
   return true
 }
 
-
+//Function to get all rows in table
 function getAllConfigurations(req, res, next) {
   if (validate(req, res)) {
     db.any('select * from Configuration')
@@ -42,6 +43,7 @@ function getAllConfigurations(req, res, next) {
   }
 }
 
+//Function to get single row in table
 function getSingleConfiguration(req, res, next) {
   if (validate(req, res)) {
     const ConfigurationID = parseInt(req.params.id);
@@ -63,6 +65,7 @@ function getSingleConfiguration(req, res, next) {
   }
 }
 
+//Function to insert a new row
 function createConfiguration(req, res, next) {
   if (validate(req, res)) {
     req.body.user_id = parseInt(req.body.user_id);
@@ -86,6 +89,7 @@ function createConfiguration(req, res, next) {
   }
 }
 
+//Function to update a row in table
 function updateConfiguration(req, res, next) {
   if (validate(req, res)) {
     db.none('update Configuration set volume=$1, vibration=$2 where user_id=$3', [(req.body.volume == 'true'), (req.body.vibration == 'true'), parseInt(req.params.id)])
@@ -106,6 +110,7 @@ function updateConfiguration(req, res, next) {
   }
 }
 
+//Function to remove a row in table
 function removeConfiguration(req, res, next) {
   if (validate(req, res)) {
     const ConfigurationID = parseInt(req.params.id);

@@ -9,6 +9,7 @@ module.exports = {
   removeChallengesGoalsUser: removeChallengesGoalsUser
 };
 
+//Function to validate a request
 function validate(req, res) {
   if (!req.headers.hasOwnProperty('authorization') || req.headers.authorization == "" || !auth.autentificarAccion(req.headers.authorization)) {
     res.status(500)
@@ -21,7 +22,7 @@ function validate(req, res) {
   return true
 }
 
-
+//Function to get all rows in table
 function getAllChallengesGoalsUser(req, res, next) {
   if (validate(req, res)) {
     db.any('select * from challenges_and_goals_x_user')
@@ -42,6 +43,7 @@ function getAllChallengesGoalsUser(req, res, next) {
   }
 }
 
+//Function to get single row in table
 function getSingleChallengesGoalsUser(req, res, next) {
   if (validate(req, res)) {
     const ID = parseInt(req.params.id);
@@ -63,6 +65,7 @@ function getSingleChallengesGoalsUser(req, res, next) {
   }
 }
 
+//Function to insert a new row
 function createChallengesGoalsUser(req, res, next) {
   if (validate(req, res)) {
     req.body.user_id = parseInt(req.body.user_id);
@@ -88,6 +91,7 @@ function createChallengesGoalsUser(req, res, next) {
   }
 }
 
+//Function to update a row in table
 function updateChallengesGoalsUser(req, res, next) {
   if (validate(req, res)) {
     db.none('update challenges_and_goals_x_user set goal_id=$1 where challenge_id=$2 and user_id=$3', [parseInt(req.body.goal_id), parseInt(req.body.challenge_id), parseInt(req.params.id)])
@@ -108,6 +112,7 @@ function updateChallengesGoalsUser(req, res, next) {
   }
 }
 
+//Function to remove a row in table
 function removeChallengesGoalsUser(req, res, next) {
   if (validate(req, res)) {
     db.result('delete from challenges_and_goals_x_user where goal_id=$1 and challenge_id=$2 and user_id=$3', [parseInt(req.body.goal_id), parseInt(req.body.challenge_id), parseInt(req.params.id)])

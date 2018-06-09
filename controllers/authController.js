@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const config = require('../config');
 const db = require('../db');
 
+//Function to login an user
 function ingresar(req, res, next) {
   const userMail = req.body.mail;
   const userPass = req.body.password;
@@ -36,6 +37,7 @@ function ingresar(req, res, next) {
     });
 }
 
+//Function to authenticate a token
 function autentificarAccion(JWT) {
   return jwt.verify(JWT, config.pass, function(err, decoded) {
     return typeof decoded != "undefined";

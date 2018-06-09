@@ -9,6 +9,7 @@ module.exports = {
   removeType: removeType
 };
 
+//Function to validate a request
 function validate(req, res) {
   if (!req.headers.hasOwnProperty('authorization') || req.headers.authorization == "" || !auth.autentificarAccion(req.headers.authorization)) {
     res.status(500)
@@ -21,7 +22,7 @@ function validate(req, res) {
   return true
 }
 
-
+//Function to get all rows in table
 function getAllTypes(req, res, next) {
   if (validate(req, res)) {
     db.any('select * from type_users')
@@ -42,6 +43,7 @@ function getAllTypes(req, res, next) {
   }
 }
 
+//Function to get single row in table
 function getSingleType(req, res, next) {
   if (validate(req, res)) {
     const TypeID = parseInt(req.params.id);
@@ -63,6 +65,7 @@ function getSingleType(req, res, next) {
   }
 }
 
+//Function to insert a new row
 function createType(req, res, next) {
   if (validate(req, res)) {
     db.none('insert into type_users(name)' +
@@ -85,6 +88,7 @@ function createType(req, res, next) {
   }
 }
 
+//Function to update a row in table
 function updateType(req, res, next) {
   if (validate(req, res)) {
     db.none('update type_users set name=$1 where id=$2', [req.body.name, parseInt(req.params.id)])
@@ -105,6 +109,7 @@ function updateType(req, res, next) {
   }
 }
 
+//Function to remove a row in table
 function removeType(req, res, next) {
   if (validate(req, res)) {
     const TypeID = parseInt(req.params.id);

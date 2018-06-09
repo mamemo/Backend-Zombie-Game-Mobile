@@ -9,6 +9,7 @@ module.exports = {
   removeGoal: removeGoal
 };
 
+//Function to validate a request
 function validate(req, res) {
   if (!req.headers.hasOwnProperty('authorization') || req.headers.authorization == "" || !auth.autentificarAccion(req.headers.authorization)) {
     res.status(500)
@@ -21,7 +22,7 @@ function validate(req, res) {
   return true
 }
 
-
+//Function to get all rows in table
 function getAllGoals(req, res, next) {
   if (validate(req, res)) {
     db.any('select * from goals')
@@ -42,6 +43,7 @@ function getAllGoals(req, res, next) {
   }
 }
 
+//Function to get single row in table
 function getSingleGoal(req, res, next) {
   if (validate(req, res)) {
     const GoalID = parseInt(req.params.id);
@@ -63,6 +65,7 @@ function getSingleGoal(req, res, next) {
   }
 }
 
+//Function to insert a new row
 function createGoal(req, res, next) {
   if (validate(req, res)) {
     req.body.latitud = parseFloat(req.body.latitud);
@@ -90,6 +93,7 @@ function createGoal(req, res, next) {
   }
 }
 
+//Function to update a row in table
 function updateGoal(req, res, next) {
   if (validate(req, res)) {
     db.none('update goals set name=$1, latitud=$2, longitud=$3, points=$4,' +
@@ -114,6 +118,7 @@ function updateGoal(req, res, next) {
   }
 }
 
+//Function to remove a row in table
 function removeGoal(req, res, next) {
   if (validate(req, res)) {
     const GoalID = parseInt(req.params.id);
