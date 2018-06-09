@@ -5,15 +5,15 @@ CREATE DATABASE zombies;
 
 CREATE TABLE type_users (
   id SERIAL PRIMARY KEY,
-  name VARCHAR
+  name VARCHAR(100)
 );
 INSERT INTO type_users (name) VALUES('Administrator');
 INSERT INTO type_users (name) VALUES('Player');
 
 CREATE TABLE users (
-  mail VARCHAR PRIMARY KEY,
-  password VARCHAR,
-  name VARCHAR,
+  mail VARCHAR(100) PRIMARY KEY,
+  password VARCHAR(100),
+  name VARCHAR(100),
   challenges_completed INTEGER,
   points INTEGER,
   zombies_killed INTEGER,
@@ -21,10 +21,11 @@ CREATE TABLE users (
   type_id INTEGER REFERENCES type_users(id)
 );
 
+
 CREATE TABLE challenges (
   id SERIAL PRIMARY KEY,
-  name VARCHAR,
-  description VARCHAR,
+  name VARCHAR(100),
+  description VARCHAR(200),
   latitud_inicial REAL,
   longitud_inicial REAL,
   latitud_final REAL,
@@ -34,7 +35,7 @@ CREATE TABLE challenges (
 
 CREATE TABLE type_goals (
   id SERIAL PRIMARY KEY,
-  name VARCHAR,
+  name VARCHAR(100),
   stamina INTEGER,
   bullets INTEGER
 );
@@ -46,7 +47,7 @@ INSERT INTO type_goals (name,stamina,bullets) VALUES('EQUAL',4,5);
 
 CREATE TABLE goals (
   id SERIAL PRIMARY KEY,
-  name VARCHAR,
+  name VARCHAR(100),
   latitud REAL,
   longitud REAL,
   points REAL,
@@ -56,8 +57,8 @@ CREATE TABLE goals (
 
 CREATE TABLE achievements (
   id SERIAL PRIMARY KEY,
-  name VARCHAR,
-  description VARCHAR
+  name VARCHAR(100),
+  description VARCHAR(100)
 );
 INSERT INTO achievements (name,description) VALUES('Noob','First challenge accomlished.');
 INSERT INTO achievements (name,description) VALUES('Getting experience','5 challenges accomlished.');
@@ -69,12 +70,12 @@ CREATE TABLE configuration (
   id SERIAL PRIMARY KEY,
   volume BOOLEAN,
   vibration BOOLEAN,
-  user_mail VARCHAR REFERENCES users(mail)
+  user_mail VARCHAR(100) REFERENCES users(mail)
 );
 
 CREATE TABLE challenges_and_goals_x_user (
   id SERIAL PRIMARY KEY,
-  user_mail VARCHAR REFERENCES users(mail),
+  user_mail VARCHAR(100) REFERENCES users(mail),
   challenge_id INTEGER REFERENCES challenges(id),
   goal_id INTEGER REFERENCES goals(id)
 );

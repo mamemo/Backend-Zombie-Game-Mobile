@@ -1,7 +1,15 @@
 doctype html
 html
   head
-    title= title
+    title Home
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    header
+      img(src="/images/logo.jpeg" alt="Zombie Cataclysm")
+    .container
+      .main-content
+        block content
+      .sidebar
+        block sidebar
+    footer
+      p Created by Juan Araya, Fauricio Navarro and Mauro Méndez. IC-8041.
