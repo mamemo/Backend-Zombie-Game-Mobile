@@ -1,0 +1,17 @@
+{
+    "pg": {
+      "host": "zombies.crehatb3pukn.us-east-2.rds.amazonaws.com",
+      "database": "zombies",
+      "user": "postgres",
+      "password": "admin123",
+      "schema": "public"
+    },
+    "server": {
+        "port": 3001
+    },
+    "app": {
+        "layouts": true,
+        "themes": true,
+        "languages": true
+    }
+}
