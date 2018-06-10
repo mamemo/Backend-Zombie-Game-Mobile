@@ -1,4 +1,5 @@
 const db = require('../db');
+const auth = require('./authController');
 
 // add query functions
 module.exports = {
