@@ -70,7 +70,7 @@ function getSingleConfiguration(req, res, next) {
 function createConfiguration(req, res, next) {
   if (validate(req, res)) {
     db.none('insert into Configuration(volume, vibration, user_mail)' +
-        'values(true, true, ${mail)',
+        'values(true, true, ${mail})',
         req.body)
       .then(function() {
         res.status(200)
