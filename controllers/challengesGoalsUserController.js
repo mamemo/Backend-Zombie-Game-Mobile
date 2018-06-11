@@ -48,7 +48,7 @@ function getAllChallengesGoalsUser(req, res, next) {
 function getSingleChallengesGoalsUser(req, res, next) {
   if (validate(req, res)) {
     const mail = req.params.mail;
-    db.one('select * from challenges_and_goals_x_user where user_mail = $1', mail)
+    db.any('select * from challenges_and_goals_x_user where user_mail = $1', mail)
       .then(function(data) {
         res.status(200)
           .json({
