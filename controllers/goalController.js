@@ -7,7 +7,8 @@ module.exports = {
   getSingleGoal: getSingleGoal,
   createGoal: createGoal,
   updateGoal: updateGoal,
-  removeGoal: removeGoal
+  removeGoal: removeGoal,
+  getGoalsXChallenge: getGoalsXChallenge
 };
 
 //Function to validate a request
