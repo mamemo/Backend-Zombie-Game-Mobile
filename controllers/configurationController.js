@@ -47,8 +47,8 @@ function getAllConfigurations(req, res, next) {
 //Function to get single row in table
 function getSingleConfiguration(req, res, next) {
   if (validate(req, res)) {
-    const ConfigurationID = parseInt(req.params.id);
-    db.one('select * from Configuration where id = $1', ConfigurationID)
+    const mail = req.body.mail;
+    db.one('select * from Configuration where user_mail = $1', mail)
       .then(function(data) {
         res.status(200)
           .json({
@@ -69,9 +69,8 @@ function getSingleConfiguration(req, res, next) {
 //Function to insert a new row
 function createConfiguration(req, res, next) {
   if (validate(req, res)) {
-    req.body.user_id = parseInt(req.body.user_id);
-    db.none('insert into Configuration(volume, vibration, user_id)' +
-        'values(true, true, ${user_id})',
+    db.none('insert into Configuration(volume, vibration, user_mail)' +
+        'values(true, true, ${mail)',
         req.body)
       .then(function() {
         res.status(200)
@@ -93,7 +92,7 @@ function createConfiguration(req, res, next) {
 //Function to update a row in table
 function updateConfiguration(req, res, next) {
   if (validate(req, res)) {
-    db.none('update Configuration set volume=$1, vibration=$2 where user_id=$3', [(req.body.volume == 'true'), (req.body.vibration == 'true'), parseInt(req.params.id)])
+    db.none('update Configuration set volume=$1, vibration=$2 where user_mail=$3', [(req.body.volume == 'true'), (req.body.vibration == 'true'), req.params.mail])
       .then(function() {
         res.status(200)
           .json({
@@ -114,8 +113,8 @@ function updateConfiguration(req, res, next) {
 //Function to remove a row in table
 function removeConfiguration(req, res, next) {
   if (validate(req, res)) {
-    const ConfigurationID = parseInt(req.params.id);
-    db.result('delete from Configuration where user_id = $1', ConfigurationID)
+    const ConfigurationID = req.params.mail;
+    db.result('delete from Configuration where user_mail = $1', ConfigurationID)
       .then(function(result) {
         /* jshint ignore:start */
         res.status(200)

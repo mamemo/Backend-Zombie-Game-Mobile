@@ -79,3 +79,9 @@ CREATE TABLE challenges_and_goals_x_user (
   challenge_id INTEGER REFERENCES challenges(id),
   goal_id INTEGER REFERENCES goals(id)
 );
+
+CREATE TABLE achievements_x_user (
+  id SERIAL PRIMARY KEY,
+  user_mail VARCHAR(100) REFERENCES users(mail),
+  achievement_id INTEGER REFERENCES achievements(id)
+);

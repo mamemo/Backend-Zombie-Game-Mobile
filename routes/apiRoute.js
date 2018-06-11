@@ -9,6 +9,7 @@ const challenges = require('../controllers/challengeController');
 const goals = require('../controllers/goalController');
 const configurations = require('../controllers/configurationController');
 const challengeGoalUser = require('../controllers/challengesGoalsUserController');
+const achievementUser = require('../controllers/achievementsUserController');
 
 
 //Routes for users CRUD
@@ -52,19 +53,27 @@ router.get('/goals/:id', goals.getSingleGoal);
 router.post('/goals', goals.createGoal);
 router.put('/goals/:id', goals.updateGoal);
 router.delete('/goals/:id', goals.removeGoal);
+router.get('/goals_x_challenge/:id', goals.getGoalsXChallenge);
 
 //Routes for configurations CRUD
 router.get('/configurations/', configurations.getAllConfigurations);
-router.get('/configurations/:id', configurations.getSingleConfiguration);
+router.get('/configurations/:mail', configurations.getSingleConfiguration);
 router.post('/configurations', configurations.createConfiguration);
-router.put('/configurations/:id', configurations.updateConfiguration);
-router.delete('/configurations/:id', configurations.removeConfiguration);
+router.put('/configurations/:mail', configurations.updateConfiguration);
+router.delete('/configurations/:mail', configurations.removeConfiguration);
 
 //Routes for challengesXgoalsXusers CRUD
 router.get('/challengesGoalsUsers/', challengeGoalUser.getAllChallengesGoalsUser);
-router.get('/challengesGoalsUsers/:id', challengeGoalUser.getSingleChallengesGoalsUser);
+router.get('/challengesGoalsUsers/:mail', challengeGoalUser.getSingleChallengesGoalsUser);
 router.post('/challengesGoalsUsers', challengeGoalUser.createChallengesGoalsUser);
-router.put('/challengesGoalsUsers/:id', challengeGoalUser.updateChallengesGoalsUser);
-router.delete('/challengesGoalsUsers/:id', challengeGoalUser.removeChallengesGoalsUser);
+router.put('/challengesGoalsUsers/:mail', challengeGoalUser.updateChallengesGoalsUser);
+router.delete('/challengesGoalsUsers/:mail', challengeGoalUser.removeChallengesGoalsUser);
+
+//Routes for challengesXgoalsXusers CRUD
+router.get('/achievementsUsers/', achievementUser.getAllAchivementsUser);
+router.get('/achievementsUsers/:mail', achievementUser.getSingleAchivementsUser);
+router.post('/achievementsUsers', achievementUser.createAchivementsUser);
+router.put('/achievementsUsers/:mail', achievementUser.updateAchivementsUser);
+router.delete('/achievementsUsers/:mail', achievementUser.removeAchivementsUser);
 
 module.exports = router;

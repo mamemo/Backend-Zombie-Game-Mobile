@@ -66,6 +66,28 @@ function getSingleGoal(req, res, next) {
   }
 }
 
+//Function to get goals of a challenge
+function getGoalsXChallenge(req, res, next) {
+  if (validate(req, res)) {
+    const GoalID = parseInt(req.params.id);
+    db.one('select * from goals where challenge_id = $1', GoalID)
+      .then(function(data) {
+        res.status(200)
+          .json({
+            status: 'success',
+            data: data
+          });
+      })
+      .catch(function(err) {
+        res.status(500)
+          .json({
+            status: 'error',
+            err: err
+          });
+      });
+  }
+}
+
 //Function to insert a new row
 function createGoal(req, res, next) {
   if (validate(req, res)) {

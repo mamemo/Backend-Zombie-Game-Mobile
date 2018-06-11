@@ -3,11 +3,11 @@ const auth = require('./authController');
 
 // add query functions
 module.exports = {
-  getAllChallengesGoalsUser: getAllChallengesGoalsUser,
-  getSingleChallengesGoalsUser: getSingleChallengesGoalsUser,
-  createChallengesGoalsUser: createChallengesGoalsUser,
-  updateChallengesGoalsUser: updateChallengesGoalsUser,
-  removeChallengesGoalsUser: removeChallengesGoalsUser
+  getAllAchivementsUser: getAllAchivementsUser,
+  getSingleAchivementsUser: getSingleAchivementsUser,
+  createAchivementsUser: createAchivementsUser,
+  updateAchivementsUser: updateAchivementsUser,
+  removeAchivementsUser: removeAchivementsUser
 };
 
 //Function to validate a request
@@ -24,9 +24,9 @@ function validate(req, res) {
 }
 
 //Function to get all rows in table
-function getAllChallengesGoalsUser(req, res, next) {
+function getAllAchivementsUser(req, res, next) {
   if (validate(req, res)) {
-    db.any('select * from challenges_and_goals_x_user')
+    db.any('select * from achievements_x_user')
       .then(function(data) {
         res.status(200)
           .json({
@@ -45,10 +45,10 @@ function getAllChallengesGoalsUser(req, res, next) {
 }
 
 //Function to get single row in table
-function getSingleChallengesGoalsUser(req, res, next) {
+function getSingleAchivementsUser(req, res, next) {
   if (validate(req, res)) {
-    const mail = req.body.mail;
-    db.one('select * from challenges_and_goals_x_user where user_mail = $1', mail)
+    const mail = req.params.mail;
+    db.one('select * from achievements_x_user where user_mail = $1', mail)
       .then(function(data) {
         res.status(200)
           .json({
@@ -67,18 +67,17 @@ function getSingleChallengesGoalsUser(req, res, next) {
 }
 
 //Function to insert a new row
-function createChallengesGoalsUser(req, res, next) {
+function createAchivementsUser(req, res, next) {
   if (validate(req, res)) {
-    req.body.challenge_id = parseInt(req.body.challenge_id);
-    req.body.goal_id = parseInt(req.body.goal_id);
-    db.none('insert into challenges_and_goals_x_user(user_mail, challenge_id, goal_id)' +
-        'values(${mail},${challenge_id}, ${goal_id})',
+    req.body.achievement_id = parseInt(req.body.achievement_id);
+    db.none('insert into achievements_x_user(user_mail, achievement_id)' +
+        'values(${mail},${achievement_id})',
         req.body)
       .then(function() {
         res.status(200)
           .json({
             status: 'success',
-            message: 'Inserted one ChallengeGoal per User'
+            message: 'Inserted one Achivement per User'
           });
       })
       .catch(function(err) {
@@ -92,14 +91,14 @@ function createChallengesGoalsUser(req, res, next) {
 }
 
 //Function to update a row in table
-function updateChallengesGoalsUser(req, res, next) {
+function updateAchivementsUser(req, res, next) {
   if (validate(req, res)) {
-    db.none('update challenges_and_goals_x_user set goal_id=$1 where challenge_id=$2 and user_mail=$3', [parseInt(req.body.goal_id), parseInt(req.body.challenge_id), req.body.mail])
+    db.none('update achievements_x_user set achievement_id=$1 where user_mail=$2', [parseInt(req.body.achievement_id), req.params.mail])
       .then(function() {
         res.status(200)
           .json({
             status: 'success',
-            message: 'Updated ChallengeGoal per User'
+            message: 'Updated Achievement per User'
           });
       })
       .catch(function(err) {
@@ -113,15 +112,15 @@ function updateChallengesGoalsUser(req, res, next) {
 }
 
 //Function to remove a row in table
-function removeChallengesGoalsUser(req, res, next) {
+function removeAchivementsUser(req, res, next) {
   if (validate(req, res)) {
-    db.result('delete from challenges_and_goals_x_user where goal_id=$1 and challenge_id=$2 and user_mail=$3', [parseInt(req.body.goal_id), parseInt(req.body.challenge_id), req.params.mail])
+    db.result('delete from achievements_x_user where achievement_id=$1 and user_mail=$2', [parseInt(req.body.achievement_id), req.params.mail])
       .then(function(result) {
         /* jshint ignore:start */
         res.status(200)
           .json({
             status: 'success',
-            message: `Removed ${result.rowCount} ChallengeGoal per User`
+            message: `Removed ${result.rowCount} Achievement per User`
           });
         /* jshint ignore:end */
       })
