@@ -71,7 +71,7 @@ function getSingleGoal(req, res, next) {
 function getGoalsXChallenge(req, res, next) {
   if (validate(req, res)) {
     const GoalID = parseInt(req.params.id);
-    db.one('select * from goals where challenge_id = $1', GoalID)
+    db.any('select * from goals where challenge_id = $1', GoalID)
       .then(function(data) {
         res.status(200)
           .json({
