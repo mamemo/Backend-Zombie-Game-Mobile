@@ -47,7 +47,7 @@ function getAllChallengesGoalsUser(req, res, next) {
 //Function to get single row in table
 function getSingleChallengesGoalsUser(req, res, next) {
   if (validate(req, res)) {
-    const mail = req.body.mail;
+    const mail = req.params.mail;
     db.one('select * from challenges_and_goals_x_user where user_mail = $1', mail)
       .then(function(data) {
         res.status(200)
@@ -94,7 +94,7 @@ function createChallengesGoalsUser(req, res, next) {
 //Function to update a row in table
 function updateChallengesGoalsUser(req, res, next) {
   if (validate(req, res)) {
-    db.none('update challenges_and_goals_x_user set goal_id=$1 where challenge_id=$2 and user_mail=$3', [parseInt(req.body.goal_id), parseInt(req.body.challenge_id), req.body.mail])
+    db.none('update challenges_and_goals_x_user set goal_id=$1 where challenge_id=$2 and user_mail=$3', [parseInt(req.body.goal_id), parseInt(req.body.challenge_id), req.params.mail])
       .then(function() {
         res.status(200)
           .json({
